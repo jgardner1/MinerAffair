@@ -1,6 +1,15 @@
 #!/usr/bin/env python
 
-current_room = dict(
+class Room(object):
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+    def look(self):
+        print self.name
+        print self.description
+
+current_room = Room(
     name="This room is this room",
     description="This room is a room, like other rooms but a little \
 different."
@@ -12,8 +21,7 @@ while True:
         break
 
     elif text == "look":
-        print current_room['name']
-        print current_room['description']
+        current_room.look()
 
     else:
         print "What was that?"
