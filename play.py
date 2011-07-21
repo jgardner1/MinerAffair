@@ -9,23 +9,29 @@ class Room(object):
     def look(self):
         print self.name
         print self.description
-        print "Exits are: "+(", ".join((_ for _ in self.exits)))
+        print "Exits are: "+(", ".join(self.exits.keys()))
 
-room1 = Room(
-    name="This room is this room",
-    description="This room is a room, like other rooms but a little \
-different."
-)
 
-room2 = Room(
-    name="This is another room",
-    description="This room is slightly different from the previous room."
-)
+rooms = dict()
+for i in xrange(10):
+    for j in xrange(10):
+        rooms[(i,j)] = Room(
+            "Wilderness at {},{}".format(i,j),
+            "This is the wilderness. You feel alone.")
 
-room1.exits['north'] = room2
-room2.exits['south'] = room1
+for i in xrange(10):
+    for j in xrange(10):
+        if j < 9:
+            rooms[(i,j)].exits['north'] = rooms[(i, j+1)]
+        if j > 0:
+            rooms[(i,j)].exits['south'] = rooms[(i, j-1)]
 
-current_room = room1
+        if i < 9:
+            rooms[(i,j)].exits['east'] = rooms[(i+1, j)]
+        if i > 0:
+            rooms[(i,j)].exits['west'] = rooms[(i-1, j)]
+
+current_room = rooms[(0,0)]
 
 while True:
     text = raw_input("Your command? ")
