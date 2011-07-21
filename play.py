@@ -23,6 +23,10 @@ terrains = (
         description="There are rolling hills here, quite annoying.",
     ),
     dict(
+        name="Mountains",
+        description="Mountains make this area quite foreboding.",
+    ),
+    dict(
         name="Valley",
         description="Nestled between the hills and mountains, this valley is \
 quiet.",
