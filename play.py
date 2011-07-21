@@ -9,6 +9,7 @@ class Room(object):
     def look(self):
         print self.name
         print self.description
+        print "Exits are: "+(", ".join((_ for _ in self.exits)))
 
 room1 = Room(
     name="This room is this room",
@@ -38,6 +39,7 @@ while True:
     elif text in current_room.exits:
         print "You go {}.".format(text)
         current_room = current_room.exits[text]
+        current_room.look()
 
     else:
         print "What was that?"
