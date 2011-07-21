@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import random
+
 class Room(object):
     def __init__(self, name, description):
         self.name = name
@@ -11,6 +13,25 @@ class Room(object):
         print self.description
         print "Exits are: "+(", ".join(self.exits.keys()))
 
+terrains = (
+    dict(
+        name="Meadow",
+        description="You are surrounded by grass and flowers.",
+    ),
+    dict(
+        name="Hills",
+        description="There are rolling hills here, quite annoying.",
+    ),
+    dict(
+        name="Valley",
+        description="Nestled between the hills and mountains, this valley is \
+quiet.",
+    ),
+    dict(
+        name="Lake",
+        description="You stand at the edge of a perfectly blue lake.",
+    )
+)
 
 class World(object):
     
@@ -21,9 +42,13 @@ class World(object):
         # Create all the rooms first
         for i in xrange(width):
             for j in xrange(height):
-                self.rooms[(i,j)] = Room(
-                    "Wilderness".format(i,j),
-                    "This is the wilderness. You feel alone.")
+                self.rooms[(i,j)] = Room(**random.choice(terrains))
+
+        # One of the rooms is an abandoned cabin.
+        self.cabin = self.rooms[(random.randrange(width), random.randrange(height))]
+        self.cabin.name = 'Abandoned Cabin'
+        self.cabin.description = 'This is an abandoned cabin, long forgotten.'
+
 
         # Now populate the exits of each room.
         for i in xrange(10):
