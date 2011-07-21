@@ -8,11 +8,6 @@ class Room(object):
         self.description = description
         self.exits = dict()
 
-    def look(self):
-        print self.name
-        print self.description
-        print "Exits are: "+(", ".join(self.exits.keys()))
-
 terrains = (
     dict(
         name="Meadow",
@@ -72,7 +67,41 @@ class World(object):
 
 world = World()
 
-current_room = world.starting_room
+class Player(object):
+
+    def __init__(self,  name):
+        self.name = name
+        self.current_room = world.starting_room
+
+    def go(self, direction):
+
+        # Replace direction with the long name, if this is an abbreviation.
+        direction = direction_abbreviations.get(direction, direction)
+
+        # If the room has an exit with the name, then go that direction.
+        if direction in self.current_room.exits:
+            print "You go {}.".format(direction)
+
+            # Replace current_room with the exit destination
+            self.current_room = self.current_room.exits[direction]
+
+            # Show what the room looks like after you've moved
+            self.look()
+
+        else:
+            print "BANG! You hit your head on the invisible constraints of \
+this system."
+
+    def look(self):
+        room = self.current_room
+        print room.name
+        print room.description
+        print "Exits are: "+(", ".join(room.exits))
+
+        
+
+
+player = Player("Bob")
 
 directions = set((
     'north', 'n',
@@ -96,26 +125,10 @@ while True:
         break
 
     elif text == "look":
-        current_room.look()
+        player.look()
 
     elif text in directions:
-
-        # Replace text with the long name, if this is an abbreviation.
-        text = direction_abbreviations.get(text, text)
-
-        # If the room has an exit with the name, then go that direction.
-        if text in current_room.exits:
-            print "You go {}.".format(text)
-
-            # Replace current_room with the exit destination
-            current_room = current_room.exits[text]
-
-            # Show what the room looks like after you've moved
-            current_room.look()
-
-        else:
-            print "BANG! You hit your head on the invisible constraints of \
-this system."
+        player.go(text)
 
     else:
         print "What was that?"
