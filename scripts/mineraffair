@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+from mineraffair.play import play
+
+if __name__ == '__main__':
+    play()
