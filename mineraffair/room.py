@@ -3,4 +3,6 @@ class Room(object):
         self.name = name
         self.description = description
         self.exits = dict()
+        self.contents = set()
+
 
