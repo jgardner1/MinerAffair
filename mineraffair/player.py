@@ -11,6 +11,9 @@ class Player(object):
         if command == "look":
             self.look()
 
+        elif command == "mine":
+            self.mine()
+
         elif command in directions:
             self.go(command)
 
@@ -41,3 +44,7 @@ this system."
         print room.name
         print room.description
         print "Exits are: "+(", ".join(room.exits))
+
+    def mine(self):
+        print "You chop away at the earth, looking for treasure."
+        print "You find nothing but useless rocks."
