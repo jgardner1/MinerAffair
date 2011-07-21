@@ -5,5 +5,9 @@ while True:
 
     if text == 'quit':
         break
+
+    elif text == "look":
+        print "There is nothing to see here because you really don't exist."
+
     else:
         print "What was that?"
