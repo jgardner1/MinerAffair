@@ -1,0 +1,7 @@
+This is a game I developed with a friend who is learning Python and OOP. I
+tried to make small, incremental commits to show why you want to move code
+written in a functional or recipe style into objects. As the code became more
+complicated, I moved it all into a package. We are going to make some more
+changes to it over time.
+
+It's surprising what you can do in a few hour's time!
