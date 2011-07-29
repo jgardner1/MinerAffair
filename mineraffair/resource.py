@@ -39,36 +39,6 @@ import math
 
 from mineraffair.item import Item
 
-
-class Resource(object):
-    """Terrains have resources. The resources will generate resource items for
-    the rooms."""
-
-    def __init__(self, name, amount_fn, grow_fn=None):
-        self.name = name
-        self.amount_fn = amount_fn
-        self.grow_fn = grow_fn
-
-    def generate(self):
-        weight = self.amount_fn()
-        if weight <= 0:
-            return None
-
-        else:
-            return self.kind(
-                resource=self,
-                weight=weight)
-
-class MineralResource(Resource):
-    kind = MineralResourceItem
-
-class AnimalResource(Resource):
-    kind = AnimalResourceItem
-
-    # eats: A list of resources that the animal preys on. This can be plants
-    # or other animals. 
-    def __init__(self, eats);
-
 class ResourceItem(Item):
     """Resource items can be mined / planetd / harvested / hunted. They are
     special items in a room."""
@@ -112,3 +82,34 @@ class AnimalResourceItem(ResourceItem):
         self.weight -= weight_mined
 
         return Item(name=self.name, weight=weight_mined)
+
+class Resource(object):
+    """Terrains have resources. The resources will generate resource items for
+    the rooms."""
+
+    def __init__(self, name, amount_fn, grow_fn=None):
+        self.name = name
+        self.amount_fn = amount_fn
+        self.grow_fn = grow_fn
+
+    def generate(self):
+        weight = self.amount_fn()
+        if weight <= 0:
+            return None
+
+        else:
+            return self.kind(
+                resource=self,
+                weight=weight)
+
+class MineralResource(Resource):
+    kind = MineralResourceItem
+
+class AnimalResource(Resource):
+    kind = AnimalResourceItem
+
+    # eats: A list of resources that the animal preys on. This can be plants
+    # or other animals. 
+    def __init__(self, eats):
+        pass
+

@@ -1,6 +1,6 @@
 from random import gauss
 
-from mineraffair.resource import Resource, MineralResourceItem
+from mineraffair.resource import MineralResource
 
 class Terrain(object):
 
@@ -21,16 +21,16 @@ add_terrain(Terrain(
     name="Plains",
     description="The flatness of this area of the world is annoying.",
     resources=[
-        Resource('copper ore', MineralResourceItem, lambda: gauss(100, 5000)),
-        Resource('iron ore', MineralResourceItem, lambda: gauss(100, 5000)),
+        MineralResource('copper ore', lambda: gauss(100, 5000)),
+        MineralResource('iron ore', lambda: gauss(100, 5000)),
     ]))
                 
 add_terrain(Terrain(
     name="Grassland",
     description="Thick grass creates plenty of hiding opportunities.",
     resources=[
-        Resource('copper ore', MineralResourceItem, lambda: gauss(100, 5000)),
-        Resource('iron ore', MineralResourceItem, lambda: gauss(100, 5000)),
+        MineralResource('copper ore', lambda: gauss(100, 5000)),
+        MineralResource('iron ore', lambda: gauss(100, 5000)),
     ]))
 
 add_terrain(Terrain(
@@ -38,6 +38,6 @@ add_terrain(Terrain(
     description="Towering mountains making passing through this area \
 dangerous.",
     resources=[
-        Resource('copper ore', MineralResourceItem, lambda: gauss(10000, 5000)),
-        Resource('iron ore',   MineralResourceItem, lambda: gauss(10000, 5000)),
+        MineralResource('copper ore', lambda: gauss(10000, 5000)),
+        MineralResource('iron ore',   lambda: gauss(10000, 5000)),
     ]))
