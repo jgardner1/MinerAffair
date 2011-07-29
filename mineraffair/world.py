@@ -1,33 +1,10 @@
 
 import random
 from mineraffair.room import Room
+from mineraffair.terrain import terrains
 
 class World(object):
 
-    terrains = (
-        dict(
-            name="Meadow",
-            description="You are surrounded by grass and flowers.",
-        ),
-        dict(
-            name="Hills",
-            description="There are rolling hills here, quite annoying.",
-        ),
-        dict(
-            name="Mountains",
-            description="Mountains make this area quite foreboding.",
-        ),
-        dict(
-            name="Valley",
-            description="Nestled between the hills and mountains, this valley is \
-    quiet.",
-        ),
-        dict(
-            name="Lake",
-            description="You stand at the edge of a perfectly blue lake.",
-        )
-    )
-    
     def __init__(self, width=10, height=10):
         # Holds all the rooms by their x,y position
         self.rooms = dict()
@@ -35,7 +12,7 @@ class World(object):
         # Create all the rooms first
         for i in xrange(width):
             for j in xrange(height):
-                self.rooms[(i,j)] = Room(**random.choice(self.terrains))
+                self.rooms[(i,j)] = Room(terrain=random.choice(terrains))
 
         # One of the rooms is an abandoned cabin.
         self.cabin = self.rooms[(random.randrange(width), random.randrange(height))]

@@ -18,6 +18,9 @@ class Player(object):
         elif command == "mine":
             self.mine()
 
+        elif command == "prospect":
+            self.prospect()
+
         elif command in directions:
             self.go(command)
 
@@ -32,6 +35,7 @@ class Player(object):
         # If the room has an exit with the name, then go that direction.
         if direction in self.current_room.exits:
             print "You go {}.".format(direction)
+            print
 
             # Replace current_room with the exit destination
             self.current_room = self.current_room.exits[direction]
@@ -48,7 +52,8 @@ this system."
         print room.name
         print room.description
         print "Contents:"
-        for name, g in groupby(sorted((_.name for _ in room.contents))):
+        for name, g in groupby(sorted((_.name for _ in room.contents
+                if not _.is_resource))):
             number = len(list(g))
             if number > 1:
                 print "{} {}s".format(number, name)
@@ -56,26 +61,24 @@ this system."
                 print name
         print "Exits are: "+(", ".join(room.exits))
 
+    def prospect(self):
+        room = self.current_room
+
+        resources = [_ for _ in room.contents if _.is_resource]
+
+        if not resources:
+            print "There are no resources left."
+        else:
+            print "You are able to see the following resources:"
+            for resource in resources:
+                print "  * {} ({}kg)".format(resource.name, resource.weight)
+
     def mine(self):
         print "You chop away at the earth, looking for treasure."
 
-        possibilities = [
-            (1.0, dict(name='rocks')),
-            (1.0, dict(name='copper')),
-            (1.0, dict(name='iron')),
-            (0.1, dict(name='silver')),
-        ]
+        result = self.current_room.mine()
 
-        poss_iter = iter(possibilities)
-        choice = poss_iter.next()
-        total = choice[0]
-        for poss in poss_iter:
-            total += poss[0]
-            if random.random() < poss[0]/total:
-                choice = poss
-
-        result = Item(**choice[1])
-
-        room = self.current_room
-        room.contents.add(result)
-        print "You find {}!".format(result.name)
+        if not result:
+            print "You can't seem to find anything interesting to mine."
+        else:
+            print "You find {}kg of {}!".format(result.weight, result.name)
