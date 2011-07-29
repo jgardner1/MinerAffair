@@ -2,10 +2,11 @@ import random
 
 class Room(object):
 
-    def __init__(self, terrain):
+    def __init__(self, terrain, pos):
         self.name = terrain.name
         self.description = terrain.description
         self.terrain = terrain
+        self.pos = pos
         self.exits = dict()
         self.contents = list()
         self.contents.extend(terrain.gen_resources())

@@ -1,5 +1,8 @@
-from mineraffair.directions import directions, direction_abbreviations
-from mineraffair.item import Item
+from mineraffair.directions import (
+    directions,
+    direction_abbreviations,
+    direction_vectors)
+#from mineraffair.item import Item
 
 import random
 
@@ -8,18 +11,24 @@ from itertools import groupby
 class Player(object):
 
     def __init__(self, world, name):
+        self.world = world
         self.name = name
         self.current_room = world.starting_room
 
     def do(self, command):
-        if command == "look":
+        command, pred = (command.split(None, 1)+[None, None])[:2]
+        
+        if command in ("look", "l"):
             self.look()
 
-        elif command == "mine":
+        elif command in ("mine", "m"):
             self.mine()
 
-        elif command == "prospect":
+        elif command in ("prospect", "p"):
             self.prospect()
+
+        elif command in ("dig", "d"):
+            self.dig(pred)
 
         elif command in directions:
             self.go(command)
@@ -82,3 +91,26 @@ this system."
             print "You can't seem to find anything interesting to mine."
         else:
             print "You find {}kg of {}!".format(result.weight, result.name)
+
+    def dig(self, direction):
+        room = self.current_room
+        direction = direction_abbreviations.get(direction, direction)
+
+        if direction in room.exits:
+            print "There is already an exit in that direction"
+            return
+
+        cur_pos = room.pos
+        vector = direction_vectors[direction]
+        new_pos = cur_pos+vector
+        print "Digging %s" % (direction,)
+
+        # Find the room in that direction, if any
+        room = self.world.rooms.get(new_pos, None)
+
+        if room is None:
+            print "need to make a new room"
+            # room = Room(..., new_pos)
+            # world.rooms[new_pos] = room
+
+        # Link the two rooms together.
