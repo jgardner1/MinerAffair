@@ -25,3 +25,12 @@ direction_vectors = {
     'up':   Vector((0,0,1)),
     'down': Vector((0,0,-1)),
 }
+
+opposite_directions = {
+    'north': 'south',
+    'south': 'north',
+    'east': 'west',
+    'west': 'east',
+    'up': 'down',
+    'down': 'up',
+}

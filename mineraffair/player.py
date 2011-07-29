@@ -1,8 +1,12 @@
 from mineraffair.directions import (
     directions,
     direction_abbreviations,
+    opposite_directions,
     direction_vectors)
 #from mineraffair.item import Item
+
+from terrain import underground_terrain
+from room import Room
 
 import random
 
@@ -27,7 +31,7 @@ class Player(object):
         elif command in ("prospect", "p"):
             self.prospect()
 
-        elif command in ("dig", "d"):
+        elif command in ("dig",):
             self.dig(pred)
 
         elif command in directions:
@@ -106,11 +110,15 @@ this system."
         print "Digging %s" % (direction,)
 
         # Find the room in that direction, if any
-        room = self.world.rooms.get(new_pos, None)
+        new_room = self.world.rooms.get(new_pos, None)
 
-        if room is None:
-            print "need to make a new room"
-            # room = Room(..., new_pos)
-            # world.rooms[new_pos] = room
+        if new_room is None:
+            new_room = Room(underground_terrain, new_pos)
+            self.world.rooms[new_pos] = room
 
         # Link the two rooms together.
+        room.exits[direction] = new_room
+        new_room.exits[opposite_directions[direction]] = room
+        print "You dig into a new room."
+        self.current_room = new_room
+        

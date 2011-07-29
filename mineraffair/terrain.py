@@ -41,3 +41,11 @@ dangerous.",
         MineralResource('copper ore', lambda: gauss(10000, 5000)),
         MineralResource('iron ore',   lambda: gauss(10000, 5000)),
     ]))
+
+underground_terrain = Terrain(
+    name="Underground",
+    description="silence and darkness pervade",
+    resources=[
+        MineralResource('copper ore', lambda: gauss(10000, 5000)),
+        MineralResource('iron ore',   lambda: gauss(10000, 5000)),
+    ])
