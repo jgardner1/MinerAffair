@@ -3,7 +3,7 @@ class Vector(tuple):
     def __add__(self, other):
         if len(other) != len(self):
             raise ValueError("Cannot add vectors of different length")
-        return Vector(map(sum, self, other))
+        return Vector(map(lambda x,y: x+y, self, other))
 
     def __sub__(self, other):
         if len(other) != len(self):
@@ -15,3 +15,6 @@ class Vector(tuple):
 
     def dot(self, other):
         return sum(map(lambda x,y: x*y, self, other))
+
+    def __repr__(self):
+        return "Vector(%s)" % (tuple.__repr__(self),)
